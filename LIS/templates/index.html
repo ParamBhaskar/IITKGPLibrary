@@ -1,0 +1,26 @@
+{% extends 'basic.html' %}
+{% block title %}IITKGP Library Information System {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="p-4 bg-light">
+    <div class="container-fluid py-3">
+      <h1 class="display-5 fw-bold">Welcome to IITKGP Library Information System</h1>
+      <p class="col-md-8 fs-4">You can register as student. You will be able to issue any book thorugh the admin. After that you need to return the book within 30 days or else a fine of Rs 5 will be charged per day till the book is returned.</p>
+      <a href="/registration/" class="btn btn-primary btn-lg">Register</a>
+    </div>
+    <br>
+    <div class="container">
+  <div class="row">
+
+    <div class="col-lg-6">
+        <a class="btn btn-outline-primary btn-lg" style="text-align:center" href="/admin_login/">Admin</a>
+    </div>
+
+    <div class="col-lg-6">
+      <a class="btn btn-outline-primary btn-lg" href="/student_login/">Student</a>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
