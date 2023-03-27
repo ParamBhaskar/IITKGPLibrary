@@ -13,6 +13,10 @@
                 <th>Author</th>
                 <th>ISBN Number</th>
                 <th>Category</th>
+                <th>Rack No.</th>
+                <th>Number of copies</th>
+                <th>Number of copies issued</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -24,6 +28,10 @@
                 <td>{{book.author}}</td>
                 <td>{{book.isbn}}</td>
                 <td>{{book.category}}</td>
+                <td>{{book.rack_no}}</td>
+                <td>{{book.copies}}</td>
+                <td>{{book.copies_issued}}</td>
+                <td><a href="/edit_book/{{book.id}}/" class="btn btn-danger" onclick="return confirm('Are you sure you want to Edit this book?')">Edit</a></td>
                 <td><a href="/delete_book/{{book.id}}/" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</a></td>
             </tr>
             {% endfor %}

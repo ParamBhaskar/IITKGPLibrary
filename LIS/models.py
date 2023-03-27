@@ -14,10 +14,10 @@ class Book(models.Model):
     rack_no = models.IntegerField(blank=True)
     copies = models.IntegerField(blank=True)
     copies_issued = models.IntegerField(blank=True)
-    reserve_id = models.CharField(max_length=255)
-    reserve_date = models.DateField(blank = True)
-    last_issue_id = models.TextField(default = None)
-    last_issue_date = models.TextField(default = None)
+    # reserve_id = models.TextField(max_length=255, default=None)
+    # reserve_date = models.DateTimeField(default=datetime.now, blank=True)
+    # last_issue_id = models.TextField(default = None)
+    # last_issue_date = models.TextField(default = None)
 
     def set_last_issue_id(self,arr):
         self.last_issue_id = json.dumps(arr)

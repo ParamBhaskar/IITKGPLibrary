@@ -16,12 +16,13 @@ urlpatterns = [
     path("student_issued_books/", views.student_issued_books, name="student_issued_books"),
     path("logout/", views.Logout, name="logout"),
     
-    path("list_books/", views.list_books, name="list_books"),
+    # path("list_books/", views.list_books, name="list_books"),
 
     path("view_books/", views.view_books, name="view_books"),
     path("view_issued_book/", views.view_issued_book, name="view_issued_book"),
     path("change_password/", views.change_password, name="change_password"),
     path("delete_book/<int:myid>/", views.delete_book, name="delete_book"),
+    path("edit_book/<int:myid>/", views.edit_book, name="edit_book"),
 
     path("issue_book/<int:myid>/", views.issue_book, name="issue_book"),
     path("reserve_book/<int:myid>/", views.reserve_book, name="reserve_book"),
