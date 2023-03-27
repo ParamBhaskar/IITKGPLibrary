@@ -48,7 +48,7 @@
     <div class="row mt-4">
         <div class="form-group col-md-6">
             <label><i style="font-weight: bold;">Department</i></label>
-            <input type="text" class="form-control mt-2" name="department" placeholder="Enter Branch Name" required>
+            <input type="text" class="form-control mt-2" name="department" placeholder="Enter Department Name" required>
         </div>
     </div>
 
@@ -81,7 +81,7 @@
 <script>
     {% if alert %}
     alert("Registration Successful.")
-    document.location = "/login"
+    document.location = "/student_login"
     {% endif %}
 </script>
 {% endblock %}

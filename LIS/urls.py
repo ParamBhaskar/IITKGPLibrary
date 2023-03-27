@@ -3,6 +3,29 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("admin_login/", views.admin_login, name="admin_login"),
-    path("registration/", views.registration, name="registration"),
+    path("login/", views.login_karo, name="login"),
+    path("login/reg/", views.reg, name="reg"),
+    path("login/clerk_login/", views.clerk_login, name="clerk_login"),
+    # path("registration/", views.registration, name="registration"),
+    # path("student_login/", views.student_login, name="student_login"),
+    path("profile/", views.profile, name="profile"),
+    path("edit_profile/", views.edit_profile, name="edit_profile"),
+    path("add_book/", views.add_book, name="add_book"),
+    # path("issue_book/", views.issue_book, name="issue_book"),
+    path("view_issued_book/", views.view_issued_book, name="view_issued_book"),
+    path("student_issued_books/", views.student_issued_books, name="student_issued_books"),
+    path("logout/", views.Logout, name="logout"),
+    
+    path("list_books/", views.list_books, name="list_books"),
+
+    path("view_books/", views.view_books, name="view_books"),
+    path("view_issued_book/", views.view_issued_book, name="view_issued_book"),
+    path("change_password/", views.change_password, name="change_password"),
+    path("delete_book/<int:myid>/", views.delete_book, name="delete_book"),
+
+    path("issue_book/<int:myid>/", views.issue_book, name="issue_book"),
+    path("reserve_book/<int:myid>/", views.reserve_book, name="reserve_book"),
+    path("return_book/<int:myid>/", views.return_book, name="return_book")
+
+
 ]

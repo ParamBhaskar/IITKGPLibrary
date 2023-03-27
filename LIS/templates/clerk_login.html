@@ -1,12 +1,12 @@
-{% extends 'basic.html' %}
 {% block title %} IITKGP Library Information System {% endblock %}
 {% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 {% endblock %}
 {% block body %}
 <div class="container">
     <br>
-    <h1 class="text-center"><u>Admin Login</u></h1><br>
-    <p><b>Note:</b> Only the admin can login from here. No other student or faculty will be allowed to login.</p>
+    <h1 class="text-center"><u>Clerk Login</u></h1><br>
+    <p><b>Note:</b> Only Clerks can login from here. No other student or faculty will be allowed to login.</p>
     <form method="POST"> {% csrf_token %}
 
         <div class="row mt-4">
