@@ -1,14 +1,23 @@
 from django.db import models
+from django.contrib.postgres.fields.array import ArrayField
+import psycopg2
 
 # Create your models here.
 from django.contrib.auth.models import User
 
 
 class Book(models.Model):
-    name = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
-    isbn = models.PositiveIntegerField()
-    category = models.CharField(max_length=50)
+    book_name = models.CharField(max_length=200)
+    author = models.CharField(max_length=200,blank = True)
+    isbn = models.CharField(blank = True)
+    category = models.CharField(max_length=50, blank=True)
+    rack_no = models.IntegerField(blank=True)
+    copies = models.IntegerField(blank=True)
+    copies_issued = models.IntegerField(blank=True)
+    reserve_id = models.CharField(max_length=255)
+    reserve_date = models.DateField(blank = True)
+    last_issue_id = ArrayField(models.CharField(max_length=255))
+    last_issue_date = ArrayField(models.DateField(blank = True))
 
     def __str__(self):
         return str(self.name) + " ["+str(self.isbn)+']'
