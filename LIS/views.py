@@ -237,12 +237,13 @@ def view_books(request):
     books = Book.objects.all()
     return render(request, "view_books.html", {'books':books})
 
-
+@login_required(login_url = 'login/clerk_login/')
 def delete_book(request, myid):
     books = Book.objects.filter(id=myid)
     books.delete()
     return redirect("/view_books")
 
+@login_required(login_url = '/login')
 def change_password(request):
     if request.method == "POST":
         current_password = request.POST['current_password']
@@ -283,15 +284,15 @@ def edit_book(request,myid):
         book.category = request.POST["category"]
         book.rack_no = request.POST['rack_no']
         book.copies = request.POST["copies"]
-        book.copies_issued = request.POST["copies_issued"]
+        # book.copies_issued = request.POST["copies_issued"]
         # book.reserve_id = request.POST["reserve_ids"]
         # arr = request.POST["last_issue_id"]
         # book.set_last_issue_id(arr)
         # arr = request.POST["last_issue_date"]
         # book.set_last_issue_id(arr)
         book.save()
-        return render(request, "view_books.html",{'alert':True})
-    return render(request, 'view_books.html')
+        return render(request, "edit_book.html",{'alert':True})
+    return render(request, 'edit_book.html')
 
 def issue_book(request,isbn,insti_id):
     book = Book.objects.get(isbn = isbn)
@@ -333,7 +334,7 @@ def issue_book(request,isbn,insti_id):
         return render(request,"view_books.html",{'alert': True})
     else:
         return render(request, "view_books.html",{'alert': False})
-    
+
 def reserve_book(request,isbn,insti_id):
 
     book = Book.objects.get(isbn = isbn)

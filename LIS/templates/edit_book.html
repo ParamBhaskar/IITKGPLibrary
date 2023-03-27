@@ -1,0 +1,66 @@
+{% extends 'clerk_navbar.html' %}
+{% block title %} IITKGP Library Information System {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container">
+    <form method="POST"> {% csrf_token %}
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Book Name</i></label>
+                <input type="text" class="form-control mt-2" name="name" placeholder="Enter name of the Book" value="{{book.name}}" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Author Name</i></label>
+                <input type="text" value="{{book.author}}" class="form-control mt-2" name="author" placeholder="Enter name of the Author"
+                    required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">ISBN Number</i></label>
+                <input type="number" value="{{book.isbn}}" class="form-control mt-2" name="isbn" placeholder="Enter ISBN number of the book"
+                    required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Category</i></label>
+                <input type="text" value="{{book.category}}" class="form-control mt-2" name="category" placeholder="Enter Category of the book"
+                    required>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Rack No.</i></label>
+                <input type="text" value="{{book.rack_no}}" class="form-control mt-2" name="rack_no" placeholder="Enter Rack Number of the book"
+                    required>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Number of copies</i></label>
+                <input type="text" value="{{book.copies}}" class="form-control mt-2" name="copies"
+                    placeholder="Enter Number of copies of the book" required>
+            </div>
+        </div>
+        <div class="row mt-4">
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-4">Update Book</button>
+</div>
+</div>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Book is Updated successfully.")
+    document.location = "/view_books"
+    {% endif %}
+</script>
+{% endblock %}
