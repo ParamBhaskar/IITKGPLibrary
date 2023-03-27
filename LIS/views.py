@@ -83,15 +83,14 @@ def add_book(request):
         rack_no = request.POST['rack_no']
         copies = request.POST["copies"]
         copies_issued = 0
-        reserve_id = []
-        last_issue_id = []
-        last_issue_date = []
+        reserve_id = None
+        
 
         
         copy = Book.objects.filter(book_name = book_name)
         if copy==None:
             book = Book.objects.create(book_name = book_name, author = author, isbn = isbn, category = category, rack_no = rack_no,
-                                        copies = copies, copies_issued = copies_issued, reserve_ids  = reserve_ids, last_issue = last_issue)
+                                        copies = copies, copies_issued = copies_issued, reserve_id = reserve_id)
 
             book.save()
         else:
@@ -125,8 +124,10 @@ def edit_book(request,isbn):
         book.copies = request.POST["copies"]
         book.copies_issued = request.POST["copies_issued"]
         book.reserve_id = request.POST["reserve_ids"]
-        book.last_issue_date = request.POST["last_issue"]
-        book.last_issue_id = request.POST["last_issue"]
+        arr = request.POST["last_issue_id"]
+        book.set_last_issue_id(arr)
+        arr = request.POST["last_issue_date"]
+        book.set_last_issue_id(arr)
         book.save()
         return render(request, "list_books.html",{'alert':True})
     return render(request, 'list_books.html')
@@ -144,10 +145,22 @@ def issue_book(request,isbn,insti_id):
             user = Faculty.objects.get(insti_id = insti_id)
         issued_books = len(user.book_issued)
         if user.book_limit > issued_books:
-            user.books_issued.append(book)
-            user.issued_date.append(datetime.date.today().isoformat())
-            book.last_issue_id.append(insti_id)
-            book.last_issue_date.append(datetime.date.today().isoformat())
+            books_issued = user.get_books_issued()
+            issued_date = user.get_issued_date()
+            last_issue_id = book.get_last_issue_id()
+            last_issue_date = book.get_last_issue_date()
+
+
+            books_issued.append(book)
+            issued_date.append(datetime.date.today().isoformat())
+            last_issue_id.append(insti_id)
+            last_issue_date.append(datetime.date.today().isoformat())
+
+            user.set_books_issued(books_issued)
+            user.set_issued_date(issued_date)
+            book.set_last_issue_id(last_issue_id)
+            book.set_last_issue_date(last_issue_date)
+
         
         if user.reserved_book == isbn:
             user.reserved_book = None
@@ -163,7 +176,8 @@ def issue_book(request,isbn,insti_id):
 def reserve_book(request,isbn,insti_id):
 
     book = Book.objects.get(isbn = isbn)
-    if(insti_id in book.last_issue_id):
+    last_issue_id  = book.get_last_issue_id()
+    if(insti_id in last_issue_id):
         book.save()
         return render(request,"list_books.html",{'alert':False})
 
@@ -195,19 +209,32 @@ def return_book(request,isbn,id):
     user = Student.objects.get(insti_id = id)
     if user == None:
         user = Faculty.objects.get(insti_id = id)
-
-    if isbn not in user.books_issued:
+    books_issued = user.get_books_issued()
+    if isbn not in books_issued:
         user.save()
         book.save()
         return render(request,"list_books.html",{'alert': False})
     book.copies_issued -=1
-    index = book.last_issue_id.index(id)
-    book.last_issue_id.pop(index)
-    book.last_issue_date.pop(index)
-    
+
+    books_issued = user.get_books_issued()
+    issued_date = user.get_issued_date()
+    last_issue_id = book.get_last_issue_id()
+    last_issue_date = book.get_last_issue_date()
+
+
+    index = last_issue_id.index(id)
+    last_issue_id.pop(index)
+    last_issue_date.pop(index)
+    book.set_last_issue_id(last_issue_id)
+    book.set_last_issue_date(last_issue_date)
     
     index = user.books_issued.index(isbn)
-    user.books_issued.pop(index)
-    user.issued_date.pop(index)
+    books_issued.pop(index)
+    issued_date.pop(index)
+    user.set_books_issued(books_issued)
+    user.set_issued_date(issued_date)
+
     book.save()
     user.save()
+
+    return render(request,"list_books.html",{'alert':True})
