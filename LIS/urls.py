@@ -2,12 +2,20 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('f_p/', views.f_p, name="f_p"),
+    path('send_otp', views.send_otp, name='send_otp'),
+    path('enter_otp', views.enter_otp, name='enter_otp'),
+    path("forgot_password/", views.forgot_password, name="forgot_password"),
+
     path("", views.index, name="index"),
     path("login/", views.login_karo, name="login"),
     path("login/reg/", views.reg, name="reg"),
-    path("login/clerk_login/", views.clerk_login, name="clerk_login"),
+    # path("login/clerk_login/", views.clerk_login, name="clerk_login"),
     # path("registration/", views.registration, name="registration"),
     # path("student_login/", views.student_login, name="student_login"),
+
+    path("afterlogin/", views.afterlogin, name="afterlogin"),
+
     path("profile/", views.profile, name="profile"),
     path("edit_profile/", views.edit_profile, name="edit_profile"),
     path("add_book/", views.add_book, name="add_book"),

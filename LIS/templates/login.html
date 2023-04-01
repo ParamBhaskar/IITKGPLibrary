@@ -118,6 +118,38 @@
             text-decoration: none;
             color: #fff;
         }
+        .reg{
+            color: #111;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .acc{
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .clerk{
+            color: #fff;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .top a:hover{
+            color: #FE6244;
+            text-decoration: solid;
+        }
+        .one a:hover{
+            color:#86A3B8;
+        }
+        .one{
+            margin-top: 20px;
+        }
+        .two a:hover{
+            color:#86A3B8;
+        }
+        .two{
+            margin-top: 20px;
+        }
     </style>
 
 </head>
@@ -127,12 +159,12 @@
         <div class="container">
 
             <div class="top">
-                <span>No account? <a href="reg/"> Register</a></span>
+                <span class="acc">No account?&nbsp&nbsp <a href="reg/" class="reg"> Register</a></span>
                 <header>Login</header>
             </div>
             <form method="POST"> {% csrf_token %}
                 <div class="input-field">
-                    <input type="text" class="input" placeholder="Username" id="def" name="username" required>
+                    <input type="text" class="input" placeholder="Institute ID" id="def" name="insti_id" required>
                     <i class='bx bx-user'></i>
                 </div>
 
@@ -150,13 +182,7 @@
                 
             <div class="two-col">
                 <div class="one">
-                   {% comment %} <p>If you are a Library Clerk:</p> {% endcomment %}
-                    <a href="clerk_login/">LogIn as Library Clerk</a>
-                    {% comment %} <input type="checkbox" name="clerk_login" id="clerk_login" value="clerk_login">
-                    <label for="clerk_login"> Are You A Clerk?</label> {% endcomment %}
-                </div>
-                <div class="two">
-                    <label><a href="#">Forgot password?</a></label>
+                    <label><a href="/f_p/" class="clerk">Forgot password?</a></label>
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'LIS'
+    'LIS',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +121,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'LIS.User'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_HOST_USER= 'paramanandabhaskar@gmail.com'
+EMAIL_HOST_PASSWORD= 'azzbmxanwfxqnxon'
+EMAIL_PORT=587
+EMAIL_USE_TLS= True
+EMAIL_USE_SSL = False
