@@ -610,62 +610,46 @@
             <table>
                 <thead>
                     <tr>
-                        <th> S/NO <span class="icon-arrow">&UpArrow;</span></th>
-                        <!-- <th> ID <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> ID <span class="icon-arrow">&UpArrow;</span></th>
                         <!-- <th> Name <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Book <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                        {% comment %} <th> Category <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
                         <th> Issue Date <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Expiry Date <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Fine <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Return <span class="icon-arrow">&UpArrow;</span></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    {% comment %} <tr>
                         <td> 1 </td>
                         <td> <img src="../static/download.jpeg" alt="">Automata Theory</td>
                         <td> M.Sipster </td>
                         <td> 17 Dec, 2022 </td>
                         <td> 17 Jan, 2023 </td>
-                        <td> 0.00 </td>
+                        <td> 0.00 </td> {% endcomment %}
+                        {% for book in iss %}
+                        <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{book.book_name}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.isbn}}</td>
+                            {% comment %} <td>{{book.category}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.rack_no}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies_issued}}</td> {% endcomment %}
+                            <td>{{book.issued_date}}</td>
+                            <td>{{book.expiry_date}}</td>
+                            <td>0.00</td>
+                            <td><a href="/return_book/{{book.id}}/" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to Issue this book?')">Return</a></td>
+                        </tr>
+                        {% endfor %}
 
-                    </tr>
-                    <tr>
-                        <td> 2 </td>
-                        <td> <img src="../static/download.jpeg" alt="">Programming</td>
-                        <td> M.Sipster </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td> 17 Jan, 2023 </td>
-                        <td> 0.00 </td>
-
-                    </tr>
-                    <tr>
-                        <td> 3 </td>
-                        <td> <img src="../static/download.jpeg" alt="">Zoology</td>
-                        <td> M.Sipster </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td> 17 Jan, 2023 </td>
-                        <td> 0.00 </td>
-
-                    </tr>
-                    <tr>
-                        <td> 4 </td>
-                        <td> <img src="../static/download.jpeg" alt="">Software Engg</td>
-                        <td> M.Sipster </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td> 17 Jan, 2023 </td>
-                        <td> 0.00 </td>
-
-                    </tr>
-                    <tr>
-                        <td> 5 </td>
-                        <td> <img src="../static/download.jpeg" alt="">You can Win</td>
-                        <td> M.Sipster </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td> 17 Jan, 2023 </td>
-                        <td> 0.00 </td>
-
-                    </tr>
 
 
                 </tbody>
@@ -674,8 +658,56 @@
     </section>
 
     <section class="search" id="search">
-        <h1 class="heading"> <span>Search</span> Section </h1>
+        <section class="table" id="issue">
+            <h1 class="heading"> <span>Search</span> Section </h1>
+            <section class="table__header">
+                <div class="input-group">
+                    <input type="search" placeholder="Search Data...">
+                    <img src="../static/" alt="">
+                </div>
+            </section>
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            {% comment %} <th> S/NO <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
+                            <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Book Name <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Category <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Rack Number <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Total Number of Copies <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Number of Copies Already Issuued <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Issue <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Reserve <span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
+                        {% for book in books %}
+                        <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{book.name}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.category}}</td>
+                            <td>{{book.rack_no}}</td>
+                            {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                            <td>{{book.copies}}</td>
+                            <td>{{book.copies_issued}}</td>
+                            <td><a href="/issue_book/{{book.id}}/" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to Issue this book?')">Issue</a></td>
+                            <td><a href="/reserve_book/{{book.id}}/" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to Reserve this book?')">Reserve</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </section>
+        </section>
     </section>
 
     <script>
@@ -891,7 +923,26 @@
         }
     </script>
 
-
+    {% block js %}
+    {% if alert1 %}
+    <div class="row mt-4">
+        <div class="form-group col-md-12">
+            <div class="alert alert-danger" role="alert">
+                Book Stock is Empty!!!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if alert2 %}
+    <div class="row mt-4">
+        <div class="form-group col-md-12">
+            <div class="alert alert-danger" role="alert">
+                You cannot reserve this book as someone has already reserved this book!!!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endblock %}
 </body>
 
 </html>

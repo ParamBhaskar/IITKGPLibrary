@@ -672,7 +672,7 @@ thead th.active,tbody td.active {
                 <li><a href="/add_book/">Add Books</a></li>
                 <!-- <li><a href="/edit_profile/">Edit/Delete Books</a></li> -->
                 <li><a href="/logout/">Logout</a></li>
-                <li><a href="/basicone/">Back</a></li>
+                {% comment %} <li><a href="/afterlogin/">Back</a></li> {% endcomment %}
             </ul>
         </nav>
         
@@ -710,27 +710,27 @@ thead th.active,tbody td.active {
                 <div class="main-user-info">
                     <div class="user-input-box">
                         <label for="bookname"><span class="tit">Book</span> Name</label>
-                        <input type="text" id="bookname" name="name" name="{{book.name}}"  required/>
+                        <input type="text" id="bookname" name="name" name="{{book.name}}" value="{{book.name}}"  required/>
                     </div>
                     <div class="user-input-box">
                         <label for="authorname"><span class="tit">Author</span> Name</label>
-                        <input type="text" id="authorname" name="author" name="{{book.author}}" required/>
+                        <input type="text" id="authorname" name="author" name="{{book.author}}" value="{{book.author}}" required/>
                     </div>
                     <div class="user-input-box">
                         <label for="isbn"><span class="tit">ISBN</span> number</label>
-                        <input type="text" id="isbn" name="isbn" placeholder="{{book.isbn}}" required/>
+                        <input type="text" id="isbn" name="isbn" placeholder="{{book.isbn}}" value="{{book.isbn}}" required/>
                     </div>
                     <div class="user-input-box">
                         <label for="category"><span class="tit">Category</span></label>
-                        <input type="text" id="category" name="category" name="{{book.category}}" required/>
+                        <input type="text" id="category" name="category" name="{{book.category}}" value="{{book.category}}" required/>
                     </div>
                     <div class="user-input-box">
                         <label for="rack"><span class="tit">Rack</span> Number</label>
-                        <input type="text" id="rack" name="rack_no" name="{{book.rack_no}}" required/>
+                        <input type="text" id="rack" name="rack_no" name="{{book.rack_no}}" value="{{book.rack_no}}" required/>
                     </div>
                     <div class="user-input-box">
                         <label for="copies">Number Of <span class="tit">Copies</span></label>
-                        <input type="text" id="copies" name="copies" name="{{book.copies}}" required/>
+                        <input type="text" id="copies" name="copies" name="{{book.copies}}" value="{{book.copies}}" required/>
                     </div>
                    
                 </div>

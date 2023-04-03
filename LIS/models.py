@@ -210,7 +210,7 @@ class Student(models.Model):
         return json.loads(self.last_issue_date)
 
     def __str__(self):
-        return str(self.user) + " ["+str(self.user.get_full_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
+        return str(self.user) + " ["+str(self.first_name)+" "+str(self.last_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
 
 
 class Faculty(models.Model):
@@ -238,7 +238,7 @@ class Faculty(models.Model):
         return json.loads(self.last_issue_date)
 
     def __str__(self):
-        return str(self.user) + " ["+str(self.user.get_full_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
+        return str(self.user) + " ["+str(self.first_name)+" "+ str(self.last_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
 
 
 class Clerk(models.Model):
@@ -249,7 +249,7 @@ class Clerk(models.Model):
     phone = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.user) + " ["+str(self.first_name)+" "+ str(self.last_name)+']'
 
 
 class Book(models.Model):
@@ -285,9 +285,31 @@ def expiry():
     return datetime.today() + timedelta(days=30)
 
 
+# class IssuedBook(models.Model):
+#     student_id = models.CharField(max_length=1000, blank=True)
+#     category = models.CharField(max_length=10, blank=True)
+#     isbn = models.CharField(max_length=13)
+#     issued_date = models.DateField(auto_now=True)
+#     expiry_date = models.DateField(default=expiry)
+
+
 class IssuedBook(models.Model):
-    student_id = models.CharField(max_length=1000, blank=True)
-    category = models.CharField(max_length=10, blank=True)
+    insti_id = models.CharField(max_length=200, blank=True)
+    book_name = models.CharField(max_length=200, blank = True)
+    author = models.CharField(max_length=200, blank=True)
+    #user_id is the insit_id
+    category = models.CharField(max_length=100, blank=True)
     isbn = models.CharField(max_length=13)
     issued_date = models.DateField(auto_now=True)
     expiry_date = models.DateField(default=expiry)
+
+    def __str__(self):
+        return str(self.book_name) + " ["+str(self.isbn)+']'
+
+class ReservedBook(models.Model):
+    insti_id = models.CharField(max_length=200, blank=True)
+    category = models.CharField(max_length=10, blank=True)
+    isbn = models.CharField(max_length=13)
+    reserved_date = models.DateField(auto_now=True)
+    available_date = models.DateField(blank = True)
+    #A user can reserve only one book and a book can be resered only by one user

@@ -3,7 +3,7 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django import forms
-from datetime import date
+from datetime import datetime, date,timedelta
 import socket
 from . import forms, models
 
@@ -168,7 +168,9 @@ def login_karo(request):
 
 
 def profile(request):
-    return render(request, "profile.html")
+    books= Book.objects.all()
+    iss= IssuedBook.objects.filter(insti_id= request.user.insti_id)
+    return render(request, "profile.html", {'iss': iss, 'books': books})
 
 @login_required(login_url='/login')
 def afterlogin(request):
@@ -368,7 +370,7 @@ def change_password(request):
 
 @login_required(login_url='/login')
 def edit_book(request, myid):
-    # book = Book.objects.get(isbn = isbn)
+    # book = Book.objects.get(id = myid)
     book = Book.objects.filter(id=myid).first()
     if request.method == "POST":
         book.name = request.POST["name"]
@@ -385,109 +387,201 @@ def edit_book(request, myid):
         # book.set_last_issue_id(arr)
         book.save()
         return render(request, "edit_book.html", {'alert': True})
-    return render(request, 'edit_book.html')
+    return render(request, "edit_book.html", {'book': book})
 
 
-def issue_book(request, isbn, insti_id):
-    book = Book.objects.get(isbn=isbn)
+# def issue_book(request, isbn, insti_id):
+#     book = Book.objects.get(isbn=isbn)
+#     if book.copies == book.copies_issued:
+#         book.save()
+#         return render(request, 'view_books.html', {'alert': False})
+
+#     if book.copies > book.copies_issued:
+
+#         user = Student.objects.get(insti_id=insti_id)
+#         if user == None:
+#             user = Faculty.objects.get(insti_id=insti_id)
+#         issued_books = len(user.book_issued)
+#         if user.book_limit > issued_books:
+#             books_issued = user.get_books_issued()
+#             issued_date = user.get_issued_date()
+#             last_issue_id = book.get_last_issue_id()
+#             last_issue_date = book.get_last_issue_date()
+
+#             books_issued.append(book)
+#             issued_date.append(datetime.date.today().isoformat())
+#             last_issue_id.append(insti_id)
+#             last_issue_date.append(datetime.date.today().isoformat())
+
+#             user.set_books_issued(books_issued)
+#             user.set_issued_date(issued_date)
+#             book.set_last_issue_id(last_issue_id)
+#             book.set_last_issue_date(last_issue_date)
+
+#         if user.reserved_book == isbn:
+#             user.reserved_book = None
+#             user.reserve_date = None
+#             book.reserve_id = None
+#             book.reserve_date = None
+#         book.save()
+#         user.save()
+#         return render(request, "view_books.html", {'alert': True})
+#     else:
+#         return render(request, "view_books.html", {'alert': False})
+
+
+# def reserve_book(request, isbn, insti_id):
+
+#     book = Book.objects.get(isbn=isbn)
+#     last_issue_id = book.get_last_issue_id()
+#     if (insti_id in last_issue_id):
+#         book.save()
+#         return render(request, "view_books.html", {'alert': False})
+
+#     user = Student.objects.get(insti_id=insti_id)
+#     if user == None:
+#         user = Faculty.objects.get(insti_id=insti_id)
+
+#     if book.copies == book.copies_issued:
+#         if book.reserve_id is not None:
+#             if isbn == user.reserved_book:
+#                 return render(request, "view_books.html", {'alert': False})
+#             else:
+#                 return render(request, "view_books.html", {'alert': False})
+
+#         else:
+#             user.reserved_book = isbn
+#             user.reserved_date = datetime.datetime.now()
+#             book.reserve_id = insti_id
+#             book.reserve_date = datetime.datetime.now()
+#             user.save()
+#             book.save()
+#             return render(request, 'view_books.html', {'alert': True})
+
+
+# def return_book(request, isbn, id):
+
+#     book = Book.objects.get(isbn=isbn)
+#     user = Student.objects.get(insti_id=id)
+#     if user == None:
+#         user = Faculty.objects.get(insti_id=id)
+#     books_issued = user.get_books_issued()
+#     if isbn not in books_issued:
+#         user.save()
+#         book.save()
+#         return render(request, "view_books.html", {'alert': False})
+#     book.copies_issued -= 1
+
+#     books_issued = user.get_books_issued()
+#     issued_date = user.get_issued_date()
+#     last_issue_id = book.get_last_issue_id()
+#     last_issue_date = book.get_last_issue_date()
+
+#     index = last_issue_id.index(id)
+#     last_issue_id.pop(index)
+#     last_issue_date.pop(index)
+#     book.set_last_issue_id(last_issue_id)
+#     book.set_last_issue_date(last_issue_date)
+
+#     index = user.books_issued.index(isbn)
+#     books_issued.pop(index)
+#     issued_date.pop(index)
+#     user.set_books_issued(books_issued)
+#     user.set_issued_date(issued_date)
+
+#     book.save()
+#     user.save()
+
+#     return render(request, "view_books.html", {'alert': True})
+
+
+@login_required(login_url='/login')
+def issue_book(request, myid):
+    # isbn = request.POST['isbn']
+    # insti_id = request.POST['insti_id']
+    book = Book.objects.filter(id=myid).first()
+    # user = Student.objects.get(insti_id=insti_id)
+    user= Student.objects.get(insti_id=request.user.insti_id)
+    if user == None:
+        user = Faculty.objects.get(insti_id=request.user.insti_id)
     if book.copies == book.copies_issued:
-        book.save()
-        return render(request, 'view_books.html', {'alert': False})
+        return render(request, 'profile.html', {'alert1': True})
+    if (book.copies - book.copies_issued) == 1:
+        if((ReservedBook.objects.filter(isbn = book.isbn) is not None) ):
+            temp_book = ReservedBook.objects.get(isbn = book.isbn)
+            if(((temp_book.available_date - datetime.date.today().isoforamt()).days < 7) and
+                              (user.insti_id != insti_id) ):
+                return render(request, 'profile.html', {'alert2': True})
+                
+    if book.copies > (book.copies_issued):
+        no_books = len(IssuedBook.objects.filter(insti_id = user.insti_id))
+        book.copies_issued=0
+        # print(no_books)
+        # print("Hi")
+        # print(user.book_limit)
+        if user.book_limit > no_books:
+            book.copies_issued += 1
+            book.save()
+            insti_id = user.insti_id
+            # category = book.category
+            isbn = book.isbn
+            book_name = book.name
+            author=book.author
+            issued_date = datetime.today()
+            expiry_date = datetime.today() + timedelta(days = 30)
+ 
+            issued_book = IssuedBook.objects.create(insti_id = insti_id, category = book.category, isbn = isbn, 
+                                                    issued_date = issued_date, expiry_date = expiry_date,book_name = book_name,author=author)
+            issued_book.save()
 
-    if book.copies > book.copies_issued:
-
-        user = Student.objects.get(insti_id=insti_id)
-        if user == None:
-            user = Faculty.objects.get(insti_id=insti_id)
-        issued_books = len(user.book_issued)
-        if user.book_limit > issued_books:
-            books_issued = user.get_books_issued()
-            issued_date = user.get_issued_date()
-            last_issue_id = book.get_last_issue_id()
-            last_issue_date = book.get_last_issue_date()
-
-            books_issued.append(book)
-            issued_date.append(datetime.date.today().isoformat())
-            last_issue_id.append(insti_id)
-            last_issue_date.append(datetime.date.today().isoformat())
-
-            user.set_books_issued(books_issued)
-            user.set_issued_date(issued_date)
-            book.set_last_issue_id(last_issue_id)
-            book.set_last_issue_date(last_issue_date)
-
-        if user.reserved_book == isbn:
-            user.reserved_book = None
-            user.reserve_date = None
-            book.reserve_id = None
-            book.reserve_date = None
-        book.save()
-        user.save()
-        return render(request, "view_books.html", {'alert': True})
+            if ReservedBook.objects.filter(isbn = book.isbn) is not None:
+                reserved_book = ReservedBook.objects.filter(isbn = book.isbn)
+                reserved_book.delete()
+            # return render(request, "profile.html", {'alert': True})
+            return redirect('/profile/')
+        else:
+            # return render(request, "profile.html", {'alert': False})
+            return redirect('/profile/')
     else:
-        return render(request, "view_books.html", {'alert': False})
-
-
+        return render(request, "profile.html", {'alert': False})
+  
+@login_required(login_url='/login')
 def reserve_book(request, isbn, insti_id):
-
+    
+    #if ReservedBook.objects.filter(isbn = isbn) is not None:
+     #   return render(request, "view_books.html",{'alert':False})
+    if request.method == "POST":
+        isbn = request.POST['isbn']
+        insti_id = request.POST['insti_id']
     book = Book.objects.get(isbn=isbn)
-    last_issue_id = book.get_last_issue_id()
-    if (insti_id in last_issue_id):
-        book.save()
-        return render(request, "view_books.html", {'alert': False})
-
     user = Student.objects.get(insti_id=insti_id)
     if user == None:
         user = Faculty.objects.get(insti_id=insti_id)
 
-    if book.copies == book.copies_issued:
-        if book.reserve_id is not None:
-            if isbn == user.reserved_book:
-                return render(request, "view_books.html", {'alert': False})
-            else:
-                return render(request, "view_books.html", {'alert': False})
+    if (ReservedBook.objects.filter(insti_id = insti_id) or ReservedBook.objects.filter(isbn = isbn)) is not None:
+        return render(request, "view_books.html",{'alert':False})
+    else:
+        insti_id = insti_id
+        category = book.category
+        isbn = isbn
+        reserved_date = datetime.date.today().isoformat()
 
-        else:
-            user.reserved_book = isbn
-            user.reserved_date = datetime.datetime.now()
-            book.reserve_id = insti_id
-            book.reserve_date = datetime.datetime.now()
-            user.save()
-            book.save()
-            return render(request, 'view_books.html', {'alert': True})
+        reserve = ReservedBook.objects.create(insti_id = insti_id, category = category, isbn = isbn, reserved_date = reserved_date)
 
+        return render(request, "view_books.html", {'alert': True})
+    
 
-def return_book(request, isbn, id):
+@login_required(login_url='/login')
+def return_book(request, isbn, insti_id):
+    if request.method == "POST":
+        isbn = request.POST['isbn']
+        insti_id = request.POST['insti_id']
+    
+    issued_book = IssuedBook.objects.get(isbn = isbn)
+    issued_book.delete()
 
-    book = Book.objects.get(isbn=isbn)
-    user = Student.objects.get(insti_id=id)
-    if user == None:
-        user = Faculty.objects.get(insti_id=id)
-    books_issued = user.get_books_issued()
-    if isbn not in books_issued:
-        user.save()
-        book.save()
-        return render(request, "view_books.html", {'alert': False})
-    book.copies_issued -= 1
-
-    books_issued = user.get_books_issued()
-    issued_date = user.get_issued_date()
-    last_issue_id = book.get_last_issue_id()
-    last_issue_date = book.get_last_issue_date()
-
-    index = last_issue_id.index(id)
-    last_issue_id.pop(index)
-    last_issue_date.pop(index)
-    book.set_last_issue_id(last_issue_id)
-    book.set_last_issue_date(last_issue_date)
-
-    index = user.books_issued.index(isbn)
-    books_issued.pop(index)
-    issued_date.pop(index)
-    user.set_books_issued(books_issued)
-    user.set_issued_date(issued_date)
-
-    book.save()
-    user.save()
-
+    if ReservedBook.objects.filter(isbn = isbn) is not None:
+        book = ReservedBook.objects.get(isbn = isbn)
+        book.available_date = datetime.date.today().isoformat()
+        
     return render(request, "view_books.html", {'alert': True})
