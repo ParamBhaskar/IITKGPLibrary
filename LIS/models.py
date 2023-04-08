@@ -5,6 +5,7 @@
 # from django.contrib.auth.models import AbstractUser
 from datetime import datetime, timedelta
 import json
+import datetime
 
 
 # class User(AbstractUser):
@@ -193,21 +194,12 @@ class Student(models.Model):
     insti_id = models.CharField(max_length=10, blank=True, unique=True)
     category = models.CharField(max_length=10)
     phone = models.CharField(max_length=10, blank=True)
+    fine = models.IntegerField(default=0)
+    books_issued = models.IntegerField(default=0)
     # books_issued = models.TextField(default = None, blank=True)
     # issued_date = models.TextField(default=None,blank=True)
     book_limit = models.IntegerField(blank=True, default=0)
 
-    def set_last_issue_id(self, arr):
-        self.last_issue_id = json.dumps(arr)
-
-    def get_last_issue_id(self):
-        return json.loads(self.last_issue_id)
-
-    def set_last_issue_date(self, arr):
-        self.last_issue_date = json.dumps(arr)
-
-    def get_last_issue_date(self):
-        return json.loads(self.last_issue_date)
 
     def __str__(self):
         return str(self.user) + " ["+str(self.first_name)+" "+str(self.last_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
@@ -221,21 +213,14 @@ class Faculty(models.Model):
     insti_id = models.CharField(max_length=10, blank=True, unique=True)
     category = models.CharField(max_length=10)
     phone = models.CharField(max_length=10, blank=True)
+    fine = models.IntegerField(default=0)
+
     # books_issued = models.TextField(default = None,null=True, blank=True)
     # issued_date = models.TextField(default=None,null=True, blank=True)
+    books_issued = models.IntegerField(default=0)
     book_limit = models.IntegerField(blank=True, default=0)
 
-    def set_last_issue_id(self, arr):
-        self.last_issue_id = json.dumps(arr)
-
-    def get_last_issue_id(self):
-        return json.loads(self.last_issue_id)
-
-    def set_last_issue_date(self, arr):
-        self.last_issue_date = json.dumps(arr)
-
-    def get_last_issue_date(self):
-        return json.loads(self.last_issue_date)
+   
 
     def __str__(self):
         return str(self.user) + " ["+str(self.first_name)+" "+ str(self.last_name)+']' + " ["+str(self.department)+']' + " ["+str(self.category)+']'
@@ -245,7 +230,7 @@ class Clerk(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
-    insti_id = models.CharField(max_length=5, blank=True, unique=True)
+    insti_id = models.CharField(max_length=50, blank=True, unique=True)
     phone = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
@@ -255,11 +240,11 @@ class Clerk(models.Model):
 class Book(models.Model):
     name = models.CharField(max_length=200)
     author = models.CharField(max_length=200, blank=True)
-    isbn = models.CharField(max_length=20, blank=True)
+    isbn = models.CharField(max_length=20, blank=True, unique=True)
     category = models.CharField(max_length=50, blank=True)
     rack_no = models.IntegerField(blank=True)
     copies = models.IntegerField(blank=True)
-    copies_issued = models.IntegerField(blank=True)
+    copies_issued = models.IntegerField(default=0)
     # reserve_id = models.CharField(max_length=255, default=None)
     # reserve_date = models.DateTimeField(default=datetime.now, blank=True)
     # last_issue_id = models.TextField(default = None)
@@ -302,14 +287,18 @@ class IssuedBook(models.Model):
     isbn = models.CharField(max_length=13)
     issued_date = models.DateField(auto_now=True)
     expiry_date = models.DateField(default=expiry)
+    fine = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.book_name) + " ["+str(self.isbn)+']'
 
 class ReservedBook(models.Model):
     insti_id = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=255, blank = True)
+    author = models.CharField(max_length = 255, blank = True)
     category = models.CharField(max_length=10, blank=True)
     isbn = models.CharField(max_length=13)
     reserved_date = models.DateField(auto_now=True)
-    available_date = models.DateField(blank = True)
+    available_date = models.DateField(default=datetime.date.today)
+    availability = models.BooleanField(default=False)
     #A user can reserve only one book and a book can be resered only by one user

@@ -541,14 +541,16 @@
             <!-- <i class="fa-solid fa-user icon fa-4x"></i> -->
             <img src="../static/2.png" alt="">
             <h3 class="name">{{user.get_full_name}}</h3>
-            <p class="post">{{user.student.insti_id}}</p>
+            <p class="post">{{user.insti_id}}</p>
         </div>
 
         <nav class="navbar">
             <ul>
                 <li><a href="#about">Profile</a></li>
-                <li><a href="#issue">Issued books</a></li>
+                <li><a href="#issuea">Issued books</a></li>
                 <li><a href="#search">search</a></li>
+                <li><a href="/bill/">Penalty Bill</a></li>
+                <li><a href="/reminder/">View Reminders</a></li>
                 <li><a href="/logout/">Logout</a></li>
                 <li><a href="/afterlogin/">Back</a></li>
             </ul>
@@ -573,27 +575,26 @@
         <div class="row">
             <div class="info">
                 <h3><span> ID : </span>{{user.id}}</h3>
-                <h3><span> Institute ID : </span> {{user}} </h3>
-                <h3><span> Full name : </span> {{user.get_full_name}} </h3>
+                {% comment %} <h3><span> Institute ID : </span> {{user.insti_id}} </h3>
+                <h3><span> Full name : </span> {{user.get_full_name}} </h3> {% endcomment %}
                 <h3><span> Email : </span> {{user.email}} </h3>
-                <h3><span> Phone number : </span> {{user.student.phone}} </h3>
-                <h3><span> Department : </span> {{user.student.department}} </h3>
-                <h3><span> Roll number : </span> {{user.student.insti_id}} </h3>
+                <h3><span> Phone number : </span> {{request.phone}} </h3>
+                <h3><span> Department : </span> {{request.department}} </h3>
+                <h3><span> Roll number : </span> {{user.insti_id}} </h3>
                 <a href="/edit_profile/"><button class="btn"> Edit Profile</button></a>
             </div>
         </div>
     </section>
 
 
-    <section class="table" id="issue">
+    <section class="table" id="issuea">
         <h1 class="heading"> <span>Books</span> Issued </h1>
 
         <section class="table__header">
-            <!-- <h1>Customer's Orders</h1> -->
-            <div class="input-group">
+            <!-- <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../static/" alt="">
-            </div>
+            </div> -->
             <div class="export__file">
                 <label for="export-file" class="export__file-btn" title="Export File"></label>
                 <input type="checkbox" id="export-file">
@@ -611,7 +612,6 @@
                 <thead>
                     <tr>
                         <th> ID <span class="icon-arrow">&UpArrow;</span></th>
-                        <!-- <th> Name <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Book <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Author <span class="icon-arrow">&UpArrow;</span></th>
                         <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
@@ -644,11 +644,67 @@
                             {% comment %} <td>{{book.copies_issued}}</td> {% endcomment %}
                             <td>{{book.issued_date}}</td>
                             <td>{{book.expiry_date}}</td>
-                            <td>0.00</td>
+                            <td>{{book.fine}}<form action="{% url 'payment' %}" method="POST" >{%csrf_token%}<button type="submit">Pay</button></form></td>
                             <td><a href="/return_book/{{book.id}}/" class="btn btn-danger"
-                                onclick="return confirm('Are you sure you want to Issue this book?')">Return</a></td>
+                                onclick="return confirm('Are you sure you want to return this book?')">Return</a></td>
                         </tr>
                         {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </section>
+
+    <section class="table" id="issueb">
+        <h1 class="heading"> <span>Book</span> Reserved </h1>
+
+        <section class="table__header">
+            <!-- <h1>Customer's Orders</h1> -->
+            
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th> Name <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> Book <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                        {% comment %} <th> Category <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
+                        <th> Availability <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Expiry Date <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Fine <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Return <span class="icon-arrow">&UpArrow;</span></th> -->
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td> 1 </td>
+                        <!-- <td> <img src="../static/download.jpeg" alt="">Automata Theory</td> -->
+                        <td> {{res_book.name}} </td>
+                        <td> {{res_book.author}} </td>
+                        <td> {{res_book.isbn}} </td>
+                        <td> {{res_book.availability}} </td>
+                        <!-- {% for book in iss %}
+                         <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{book.book_name}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.isbn}}</td>
+                            {% comment %} <td>{{book.category}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.rack_no}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies_issued}}</td> {% endcomment %}
+                            <td>{{book.issued_date}}</td>
+                            <td>{{book.expiry_date}}</td>
+                            <td>{{book.fine}}</td>
+                            <td><a href="/return_book/{{book.id}}/" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to return this book?')">Return</a></td>
+                        </tr> -->
+                        <!-- {% endfor %} -->
 
 
 
@@ -678,7 +734,7 @@
                             <th> Category <span class="icon-arrow">&UpArrow;</span></th>
                             <th> Rack Number <span class="icon-arrow">&UpArrow;</span></th>
                             <th> Total Number of Copies <span class="icon-arrow">&UpArrow;</span></th>
-                            <th> Number of Copies Already Issuued <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Number of Copies Already Issued <span class="icon-arrow">&UpArrow;</span></th>
                             <th> Issue <span class="icon-arrow">&UpArrow;</span></th>
                             <th> Reserve <span class="icon-arrow">&UpArrow;</span></th>
                         </tr>
@@ -719,9 +775,10 @@
             content.classList.toggle('night');
             darkMode.classList.toggle('nigh');
         })
+
         const search = document.querySelector('.input-group input'),
-            table_rows = document.querySelectorAll('tbody tr'),
-            table_headings = document.querySelectorAll('thead th');
+            table_rows = document.querySelectorAll('#issue tbody tr'),
+            table_headings = document.querySelectorAll('#issue thead th');
 
         // 1. Searching for specific data of HTML table
         search.addEventListener('input', searchTable);

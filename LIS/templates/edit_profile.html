@@ -579,11 +579,11 @@ thead th.active,tbody td.active {
                     <p>Email: </p>
                     <input type="email" name="email" value="{{user.email}}">
                     <p>Phone: </p>
-                    <input type="number" name="phone" value="{{user.student.phone}}">
+                    <input type="number" name="phone" value="{{request.phone}}">
                     <p>Department: </p>
-                    <input type="text" name="department" value="{{user.student.department}}">
+                    <input type="text" name="department" value="{{request.department}}">
                     <p>Roll Number: </p>
-                    <input type="text" name="insti_id" value="{{user.student.insti_id}}">
+                    <input type="text" name="insti_id" value="{{user.insti_id}}" readonly>
 
                    <div class="update"><a href="/edit_profile/"><button class="btn" type="submit"> Update Profile </button></a></div> 
 

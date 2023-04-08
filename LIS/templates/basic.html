@@ -547,23 +547,25 @@
                 </div>
             </div>
             <div class="contactForm">
-                <form>
+                <form method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
                     <h2>Send Message</h2>
                     <div class="inputBox">
-                        <input type="text" name="" required="required">
+                        <input type="text" name="name" required="required">
                         <span>Full Name</span>
                     </div>
                     <div class="inputBox">
-                        <input type="text" name="" required="required">
+                        <input type="text" name="email" required="required">
                         <span>Email</span>
                     </div>
                     <div class="inputBox">
-                        <textarea required="required"></textarea>
+                        <textarea required="required" name="message"></textarea>
                         <span>Type your Message</span>
                     </div>
                     <div class="inputBox">
                         <input type="submit" name="" value="Send">
                     </div>
+                    {% comment %} <a href="/"><button class="btn" type="submit">Submit </button></a> {% endcomment %}
                 </form>
             </div>
         </div>

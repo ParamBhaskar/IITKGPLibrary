@@ -21,7 +21,7 @@ urlpatterns = [
     path("add_book/", views.add_book, name="add_book"),
     # path("issue_book/", views.issue_book, name="issue_book"),
     path("view_issued_book/", views.view_issued_book, name="view_issued_book"),
-    path("student_issued_books/", views.student_issued_books, name="student_issued_books"),
+    # path("student_issued_books/", views.student_issued_books, name="student_issued_books"),
     path("logout/", views.Logout, name="logout"),
     
     # path("list_books/", views.list_books, name="list_books"),
@@ -34,7 +34,12 @@ urlpatterns = [
 
     path("issue_book/<int:myid>/", views.issue_book, name="issue_book"),
     path("reserve_book/<int:myid>/", views.reserve_book, name="reserve_book"),
-    path("return_book/<int:myid>/", views.return_book, name="return_book")
+    path("return_book/<int:myid>/", views.return_book, name="return_book"),
+    
+    path("reminder/",views.reminder, name = "reminder"),
 
+    path("contact/", views.contact, name="contact"),
+    path("payment/", views.payment, name="payment"),
+    path("bill/", views.bill, name="bill")
 
 ]

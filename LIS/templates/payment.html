@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Responsive Payment getway form design in Hindi</title>
+
+    <style>
+        
+        *{padding:0; margin:0; box-sizing: border-box; font-family:sans-serif;}
+
+        header{
+            width: 100vw;
+            min-height: 100vh;
+            background: #34495e;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            background: white;
+            max-width: 800px;
+            min-height: 500px;
+            display: flex;
+            justify-content:space-between;
+            align-items: flex-start;
+            padding: 0.5rem 1.5rem;
+        }
+        .left{
+            flex-basis: 50%;
+        }
+        .right{
+            flex-basis: 50%;
+        }
+        form{
+            padding: 1rem;
+        }
+        
+        h3{
+            margin-top: 1rem;
+            color:#2c3e50;
+            }
+        
+        form input[type="text"]{
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            margin: 0.5rem 0;
+            outline: none;
+        }
+        
+        form input[type="number"]{
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            margin: 0.5rem 0;
+            outline: none;
+        }
+
+        #zip{
+            display: flex;
+            margin-top: 0.5rem;
+        }
+        #zip select{
+            padding: 0.5rem 0.7rem;
+        }
+        #zip input[type="number"]{
+            padding: 0.5rem 0.7rem;
+            margin-left: 5px;   
+        }
+        input[type="submit"]{
+            width: 100%;
+            padding: 0.7rem 1.5rem;
+            background: #34495e;
+            color: white;
+            border: none;
+            outline: none;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover{
+            background: #2c3e50;
+        }
+        
+        
+        @media only screen and (max-width: 770px){
+            .container{
+                flex-direction: column;
+            }
+            body{
+                overflow-x: hidden;
+            }
+        }
+    </style>
+
+</head>
+<body style="background-image: url(../../../media/image.png)">
+<header>
+    <div class="container">
+        <div class="center">
+            <h3>PAYMENT</h3>
+            <form action="/shop/payment/{{customer.user.id}}/" method="POST" >
+                {% csrf_token %}
+                Accepted Card <br>
+                <img src="../../../media/card1.png" width="100">
+                <img src="../../../media/card2.png" width="50">
+                <br><br>
+
+                Credit Card number
+            <input type="text" name="credit_card_number" placeholder="Enter card number" style="width: 50%; justify-content: space-around; display: flex;">
+              <div style="padding: 10px; justify-content: space-around; display: flex;">
+                <span id="month" >
+                    <label style="padding-right: 20px; ">
+                        Enter Month 
+                        <select name="year" style="height: 30px; ">
+                            <option>Choose Month..</option>
+                            <option value=jan>jan</option>
+                            <option value=feb>feb</option>
+                            <option value=mar>mar</option>
+                            <option value=apr>apr</option>
+                            <option value=may>may</option>
+                            <option value=jun>jun</option>
+                            <option value=jul>jul</option>
+                            <option value=aug>aug</option>
+                            <option value=sept>sept</option>
+                            <option value=oct>oct</option>
+                            <option value=nov>nov</option>
+                            <option value=dec>dec</option>
+                        </select>
+                    </label>
+                    
+                </span>
+                <span id="year" >
+                    <label>
+                        Exp year
+                        <select name="year" style="height: 30px;">
+                            <option>Choose Year..</option>
+                            <option value=2022>2022</option>
+                            <option value=2023>2023</option>
+                            <option value=2024>2024</option>
+                            <option value=2025>2025</option>
+                        </select>
+                    </label>
+                    
+                </span>
+            </div >  
+                
+                CVV
+                <input type="number" name="cvv" placeholder="CVV" style="width: 50%; justify-content: space-around; display: flex;">
+                <br>
+                Total Payment
+                <input type="number" name="payment" placeholder="Enter Amount" style="width: 50%; justify-content: space-around; display: flex;">
+            
+            <input type="submit" name="" value="Proceed to Checkout">
+            </form>
+        </div>
+    </div>
+</header>
+
+</body>
+
+</html>
