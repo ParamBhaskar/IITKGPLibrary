@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminders</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+        }
+        h1 {
+            /* text-align: center; */
+            color:  #f9ca24;
+            padding-bottom: 20px;
+        }
+        .message{
+            padding: 20px;
+        }
+        .container{
+            padding: 20px;
+        }
+        .line{
+            color: #fff;
+        }
+        .fine{
+            padding-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Reminders</h1>
+        <hr class="line">
+        <div class="message">
+            <div class="fine"><h3 >{{request.fine}}</h3></div>
+            <div class="fine"><h3 ><pre>{{request.iss}}</pre></h3></div>
+            <div class="fine"><h3 >{{request.res}}</h3></div>
+          
+        </div>
+    </div>
+
+    
+    
+    
+    
+</body>
+
+</html>

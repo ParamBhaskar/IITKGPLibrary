@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+
+    <style>
+        :root {
+            --yellow: #f9ca24;
+        }
+
+        * {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            outline: none;
+            border: none;
+            /* text-transform: capitalize; */
+            transition: all .2s linear;
+            scroll-behavior: smooth;
+        }
+
+        *::selection {
+            background: var(--yellow);
+            color: #333;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: #111;
+            overflow-x: hidden;
+            padding-left: 35rem;
+        }
+
+        body.night {
+            background: #fff;
+            /* color: #fff; */
+        }
+
+        section.about {
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .btn {
+            padding: .7rem 3rem;
+            background: #333;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 2rem;
+            border-radius: 5rem;
+        }
+
+        .btn i {
+            padding: 0 .5rem;
+            font-size: 1.8rem;
+        }
+
+        .btn:hover {
+            background: var(--yellow);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            height: 100%;
+            width: 35rem;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+            text-align: center;
+        }
+
+        header .user img {
+            height: 17rem;
+            width: 17rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: .7rem solid var(--yellow)
+        }
+
+        header .user .name {
+            font-size: 3.5rem;
+            color: #fff;
+        }
+
+        header .user .post {
+            font-size: 2rem;
+            color: #eee;
+        }
+
+        header .navbar {
+            width: 100%;
+        }
+
+        header .navbar ul {
+            list-style: none;
+            padding: 1rem 3rem;
+        }
+
+        header .navbar ul li a {
+            display: block;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background: #333;
+            color: #fff;
+            font-size: 2rem;
+            border-radius: 5rem;
+        }
+
+        header .navbar ul li a:hover {
+            background: var(--yellow);
+
+        }
+
+        #menu {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #333;
+            color: #fff;
+            cursor: pointer;
+            font-size: 2.5rem;
+            padding: 1rem 1.5rem;
+            z-index: 1000;
+            display: none;
+        }
+
+
+
+        @media (max-width:1200px) {
+
+            html {
+                font-size: 55%;
+            }
+        }
+
+        @media (max-width:991px) {
+
+            header {
+                left: -120%;
+            }
+
+            #menu {
+                display: block;
+            }
+
+            header.toggle {
+                left: 0%;
+            }
+        }
+
+
+
+        .heading {
+            text-align: center;
+            margin: 0 6rem;
+            font-size: 4rem;
+            padding: 1rem;
+            border-bottom: .1rem solid #fff4;
+            color: #fff;
+        }
+
+        .heading span {
+            color: var(--yellow);
+        }
+
+        .about .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem 0;
+        }
+
+        .about .row .info {
+            flex: 1 1 48rem;
+            padding: 2rem 1rem;
+            padding-left: 6rem;
+        }
+
+        .about .row .info h3 {
+            font-size: 2rem;
+            color: var(--yellow);
+            padding: 1rem 0;
+            font-weight: normal;
+        }
+
+        .about .row .info h3 span {
+            color: #eee;
+            padding: 0 .5rem;
+        }
+
+        /* .about .row .info h3 span.nigh{
+    color: #111;
+    padding:0 .5rem;
+} */
+
+        section.table {
+            width: auto;
+            position: relative;
+            left: auto;
+            right: auto;
+            height: 100vh;
+            background-color: #111;
+
+            backdrop-filter: blur(7px);
+            box-shadow: 0 .4rem .8rem #0005;
+            border-radius: .8rem;
+            font-size: 2rem;
+            color: #fff;
+
+            overflow: hidden;
+        }
+
+
+
+        .table__header {
+            width: 100%;
+            height: 10%;
+            background-color: #111;
+            padding: .8rem 1rem;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 6rem;
+        }
+
+        .table__header .input-group {
+            width: 35%;
+            height: 100%;
+            background-color: #fff5;
+            padding: 0 .8rem;
+            border-radius: 2rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: .2s;
+        }
+
+        .table__header .input-group:hover {
+            width: 45%;
+            background-color: #fff8;
+            box-shadow: 0 .1rem .4rem #0002;
+        }
+
+        .table__header .input-group img {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .table__header .input-group input {
+            width: 100%;
+            padding: 0 .5rem 0 .3rem;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .table__body {
+            width: 95%;
+            max-height: calc(60% - 1.6rem);
+            background-color: #111;
+
+            margin: .8rem auto;
+            border-radius: .6rem;
+
+            overflow: auto;
+            overflow: overlay;
+        }
+
+        .table__body::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .table__body::-webkit-scrollbar-thumb {
+            border-radius: .5rem;
+            background-color: #fff;
+            visibility: hidden;
+        }
+
+        .table__body:hover::-webkit-scrollbar-thumb {
+            visibility: visible;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td img {
+            width: 36px;
+            height: 36px;
+            margin-right: .5rem;
+            border-radius: 50%;
+
+            vertical-align: middle;
+        }
+
+        table,
+        th,
+        td {
+            border-collapse: collapse;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            left: 0;
+            background-color: var(--yellow);
+            cursor: pointer;
+            text-transform: capitalize;
+            color: #111;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #0000000b;
+        }
+
+        tbody tr {
+            --delay: .1s;
+            transition: .5s ease-in-out var(--delay), background-color 0s;
+        }
+
+        tbody tr.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        tbody tr:hover {
+            background-color: #fff6;
+        }
+
+        tbody tr td,
+        tbody tr td p,
+        tbody tr td img {
+            transition: .2s ease-in-out;
+        }
+
+        tbody tr.hide td,
+        tbody tr.hide td p {
+            padding: 0;
+            font: 0 / 0 sans-serif;
+            transition: .2s ease-in-out .5s;
+        }
+
+        tbody tr.hide td img {
+            width: 0;
+            height: 0;
+            transition: .2s ease-in-out .5s;
+        }
+
+        .status {
+            padding: .4rem 0;
+            border-radius: 2rem;
+            text-align: center;
+        }
+
+        .status.delivered {
+            background-color: #86e49d;
+            color: #006b21;
+        }
+
+        .status.cancelled {
+            background-color: #d893a3;
+            color: #b30021;
+        }
+
+        .status.pending {
+            background-color: #ebc474;
+        }
+
+        .status.shipped {
+            background-color: #6fcaea;
+        }
+
+
+        @media (max-width: 1000px) {
+            td:not(:first-of-type) {
+                min-width: 12.1rem;
+            }
+        }
+
+        @media (max-width:1200px) {
+
+            html {
+                font-size: 55%;
+            }
+        }
+
+        @media (max-width:991px) {
+
+            header {
+                left: -120%;
+            }
+
+            #menu {
+                display: block;
+            }
+
+            header.toggle {
+                left: 0%;
+            }
+
+            body {
+                padding: 0;
+            }
+        }
+
+        @media (max-width:768px) {
+
+            html {
+                font-size: 50%;
+            }
+
+
+        }
+
+        @media (max-width:400px) {
+
+            header {
+                width: 100vw;
+            }
+
+
+        }
+
+
+        thead th span.icon-arrow {
+            display: inline-block;
+            width: 1.3rem;
+            height: 1.3rem;
+            border-radius: 50%;
+            border: 1.4px solid transparent;
+
+            text-align: center;
+            font-size: 1rem;
+
+            margin-left: .5rem;
+            transition: .2s ease-in-out;
+        }
+
+        thead th:hover span.icon-arrow {
+            border: 1.4px solid #111;
+            /* width: 1.5rem; */
+            /* height: 1.5rem; */
+            /* font-size: large; */
+        }
+
+        thead th:hover {
+            color: red;
+        }
+
+        thead th.active span.icon-arrow {
+            background-color: #111;
+            color: #fff;
+        }
+
+        thead th.asc span.icon-arrow {
+            transform: rotate(180deg);
+        }
+
+        thead th.active,
+        tbody td.active {
+            color: #fff;
+        }
+
+        .export__file {
+            position: relative;
+        }
+
+        .export__file .export__file-btn {
+            display: inline-block;
+            width: 4rem;
+            height: 4rem;
+            background: #fff url(../static/export.png) center / 80% no-repeat;
+            border-radius: 50%;
+            transition: .2s ease-in-out;
+        }
+
+        .export__file .export__file-btn:hover {
+            background-color: var(--yellow);
+            transform: scale(1.15);
+            cursor: pointer;
+        }
+
+        .export__file input {
+            display: none;
+        }
+
+        .export__file .export__file-options {
+            position: absolute;
+            right: 0;
+
+            width: 12rem;
+            border-radius: .5rem;
+            overflow: hidden;
+            text-align: center;
+
+            opacity: 0;
+            transform: scale(.8);
+            transform-origin: top right;
+
+            box-shadow: 0 .2rem .5rem #0004;
+
+            transition: .2s;
+        }
+
+        .row .btn {
+            margin-right: 20px;
+        }
+
+        .export__file input:checked+.export__file-options {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 100;
+        }
+
+        .export__file .export__file-options label {
+            display: block;
+            width: 100%;
+            padding: .6rem 0;
+            background-color: #111;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            transition: .2s ease-in-out;
+        }
+
+        .export__file .export__file-options label:first-of-type {
+            padding: 1rem 0;
+            background-color: var(--yellow);
+        }
+
+        .export__file .export__file-options label:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+            cursor: pointer;
+            color: #111;
+        }
+
+        /* .export__file .export__file-options img {
+            width: 2rem;
+            height: auto;
+        } */
+
+
+        .search {
+            margin-top: 15rem;
+            height: 100vh;
+        }
+    </style>
+    <title>{% block title %} {% endblock %}</title>
+    {% block css %}
+    {% endblock %}
+</head>
+
+
+
+<body>
+    <header>
+
+        <div class="user">
+            <!-- <i class="fa-solid fa-user icon fa-4x"></i> -->
+            <img src="../static/2.png" alt="">
+            <h3 class="name">{{user.get_full_name}}</h3>
+            <p class="post">{{user.insti_id}}</p>
+            <p class="post">{{request.category}}</p>
+        </div>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="#about">Profile</a></li>
+                <li><a href="#issuea">Issued books</a></li>
+                <li><a href="#search">search</a></li>
+                <li><a href="/bill/">Penalty Bill</a></li>
+
+                <li><a href="/logout/">Logout</a></li>
+                <li><a href="/afterlogin/">Back</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <div id="menu" class="fas fa-bars"></div>
+
+    <!-- <section class="home" id="home">
+        <h3>HI THERE !</h3>
+        <h1>I'M shailkh anas</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque aliquam, temporibus amet eum ipsa voluptate blanditiis? Assumenda nihil, consectetur saepe veritatis delectus tenetur sit dolore excepturi fugiat itaque, quia amet.</p>
+    
+    </section> -->
+
+    <label id="dark-change"></label>
+
+    <section class="about" id="about">
+        <h1 class="heading"> <span>Profile</span> Section </h1>
+
+        <div class="row">
+            <div class="info">
+                <h3><span> ID : </span>{{user.id}}</h3>
+                {% comment %} <h3><span> Institute ID : </span> {{user.insti_id}} </h3>
+                <h3><span> Full name : </span> {{user.get_full_name}} </h3> {% endcomment %}
+                <h3><span> Email : </span> {{user.email}} </h3>
+                <h3><span> Phone number : </span> {{request.phone}} </h3>
+                <h3><span> Department : </span> {{request.department}} </h3>
+                <h3><span> Roll number : </span> {{user.insti_id}} </h3>
+                <a href="/edit_profile/"><button class="btn"> Edit Profile</button></a>
+                <a href="/reminder/"><button class="btn"> View Reminders</button></a>
+                <!-- <li><a href="/reminder/">View Reminders</a></li> -->
+            </div>
+        </div>
+    </section>
+
+
+    <section class="table" id="issuea">
+        <h1 class="heading"> <span>Books</span> Issued </h1>
+
+        <section class="table__header">
+            <!-- <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="../static/" alt="">
+            </div> -->
+            <!-- <div class="export__file">
+                <label for="export-file" class="export__file-btn" title="Export File"></label>
+                <input type="checkbox" id="export-file">
+                <div class="export__file-options">
+                    <label>Export As &nbsp; &#10140;</label>
+                    <label for="export-file" id="toPDF">PDF <img src="../static/pdf.png" alt=""></label>
+                    <label for="export-file" id="toJSON">JSON <img src="../static/json.png" alt=""></label>
+                    <label for="export-file" id="toCSV">CSV <img src="../static/csv.png" alt=""></label>
+                    <label for="export-file" id="toEXCEL">EXCEL <img src="../static/excel.png" alt=""></label>
+                </div>
+            </div> -->
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Book <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                        {% comment %} <th> Category <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
+                        <th> Issue Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Expiry Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Fine <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Return <span class="icon-arrow">&UpArrow;</span></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% comment %} <tr>
+                        <td> 1 </td>
+                        <td> <img src="../static/download.jpeg" alt="">Automata Theory</td>
+                        <td> M.Sipster </td>
+                        <td> 17 Dec, 2022 </td>
+                        <td> 17 Jan, 2023 </td>
+                        <td> 0.00 </td> {% endcomment %}
+                        {% for book in iss %}
+                    <tr>
+                        <td>{{forloop.counter}}.</td>
+                        <td>{{book.book_name}}</td>
+                        <td>{{book.author}}</td>
+                        <td>{{book.isbn}}</td>
+                        {% comment %} <td>{{book.category}}</td> {% endcomment %}
+                        {% comment %} <td>{{book.rack_no}}</td> {% endcomment %}
+                        {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                        {% comment %} <td>{{book.copies}}</td> {% endcomment %}
+                        {% comment %} <td>{{book.copies_issued}}</td> {% endcomment %}
+                        <td>{{book.issued_date}}</td>
+                        <td>{{book.expiry_date}}</td>
+                        <td>
+                            <form action="{% url 'payment' %}" method="POST">{%csrf_token%}<button type="submit"
+                                    class="btn"> Pay {{book.fine}}/-</button></form>
+                        </td>
+                        <td><a href="/return_book/{{book.id}}/" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to return this book?')">Return</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </section>
+
+    <section class="table" id="issueb">
+        <h1 class="heading"> <span>Book</span> Reserved </h1>
+
+        <section class="table__header">
+            <!-- <h1>Customer's Orders</h1> -->
+
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th> Name <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> Book <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                        {% comment %} <th> Category <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
+                        <th> Availability <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Expiry Date <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Fine <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <!-- <th> Return <span class="icon-arrow">&UpArrow;</span></th> -->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <!-- <td> <img src="../static/download.jpeg" alt="">Automata Theory</td> -->
+                        <td> {{res_book.name}} </td>
+                        <td> {{res_book.author}} </td>
+                        <td> {{res_book.isbn}} </td>
+                        <td> {{res_book.availability}} </td>
+                        <!-- {% for book in iss %}
+                         <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{book.book_name}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.isbn}}</td>
+                            {% comment %} <td>{{book.category}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.rack_no}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies}}</td> {% endcomment %}
+                            {% comment %} <td>{{book.copies_issued}}</td> {% endcomment %}
+                            <td>{{book.issued_date}}</td>
+                            <td>{{book.expiry_date}}</td>
+                            <td>{{book.fine}}</td>
+                            <td><a href="/return_book/{{book.id}}/" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to return this book?')">Return</a></td>
+                        </tr> -->
+                        <!-- {% endfor %} -->
+
+
+
+                </tbody>
+            </table>
+        </section>
+    </section>
+
+    <section class="search" id="search">
+        <section class="table" id="issue">
+            <h1 class="heading"> <span>Search</span> Section </h1>
+            <section class="table__header">
+                <div class="input-group">
+                    <input type="search" placeholder="Search Data...">
+                    <img src="../static/" alt="">
+                </div>
+            </section>
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            {% comment %} <th> S/NO <span class="icon-arrow">&UpArrow;</span></th> {% endcomment %}
+                            <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Book Name <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Author <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> ISBN <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Category <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Rack Number <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Total Number of Copies <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Number of Copies Already Issued <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Issue <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Reserve <span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for book in books %}
+                        <tr>
+                            <td>{{forloop.counter}}.</td>
+                            <td>{{book.name}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.category}}</td>
+                            <td>{{book.rack_no}}</td>
+                            {% comment %} <td>{{book.copies}}-{{book.copies_issued}}</td> {% endcomment %}
+                            <td>{{book.copies}}</td>
+                            <td>{{book.copies_issued}}</td>
+                            <td><a href="/issue_book/{{book.id}}/" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to Issue this book?')">Issue</a></td>
+                            <td><a href="/reserve_book/{{book.id}}/" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to Reserve this book?')">Reserve</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </section>
+
+    <script>
+        var content = document.getElementsByTagName('body')[0];
+        var darkMode = document.getElementById('dark-change');
+        var textcolor = document.querySelectorAll('.about .row .info h3 span');
+        darkMode.addEventListener('click', function () {
+            darkMode.classList.toggle('active');
+            content.classList.toggle('night');
+            darkMode.classList.toggle('nigh');
+        })
+
+        const search = document.querySelector('.input-group input'),
+            table_rows = document.querySelectorAll('#issue tbody tr'),
+            table_headings = document.querySelectorAll('#issue thead th');
+
+        // 1. Searching for specific data of HTML table
+        search.addEventListener('input', searchTable);
+
+        function searchTable() {
+            table_rows.forEach((row, i) => {
+                let table_data = row.textContent.toLowerCase(),
+                    search_data = search.value.toLowerCase();
+
+                row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+                row.style.setProperty('--delay', i / 25 + 's');
+            })
+
+            document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+                visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+            });
+        }
+
+        // 2. Sorting | Ordering data of HTML table
+
+        table_headings.forEach((head, i) => {
+            let sort_asc = true;
+            head.onclick = () => {
+                table_headings.forEach(head => head.classList.remove('active'));
+                head.classList.add('active');
+
+                document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+                table_rows.forEach(row => {
+                    row.querySelectorAll('td')[i].classList.add('active');
+                })
+
+                head.classList.toggle('asc', sort_asc);
+                sort_asc = head.classList.contains('asc') ? false : true;
+
+                sortTable(i, sort_asc);
+            }
+        })
+
+
+        function sortTable(column, sort_asc) {
+            [...table_rows].sort((a, b) => {
+                let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+                    second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+
+                return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+            })
+                .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+        }
+
+        // 3. Converting HTML table to PDF
+
+        const pdf_btn = document.querySelector('#toPDF');
+        const customers_table = document.querySelector('#customers_table');
+
+        const toPDF = function (customers_table) {
+            const html_code = `
+        <link rel="stylesheet" href="style.css">
+        <section class="table" >${customers_table.innerHTML}</section>
+        `;
+
+            const new_window = window.open();
+            new_window.document.write(html_code);
+
+            setTimeout(() => {
+                new_window.print();
+                new_window.close();
+            }, 400);
+        }
+
+        pdf_btn.onclick = () => {
+            toPDF(customers_table);
+        }
+
+        // 4. Converting HTML table to JSON
+
+        const json_btn = document.querySelector('#toJSON');
+
+        const toJSON = function (table) {
+            let table_data = [],
+                t_head = [],
+
+                t_headings = table.querySelectorAll('th'),
+                t_rows = table.querySelectorAll('tbody tr');
+
+            for (let t_heading of t_headings) {
+                let actual_head = t_heading.textContent.trim().split(' ');
+
+                t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
+            }
+
+            t_rows.forEach(row => {
+                const row_object = {},
+                    t_cells = row.querySelectorAll('td');
+
+                t_cells.forEach((t_cell, cell_index) => {
+                    const img = t_cell.querySelector('img');
+                    if (img) {
+                        row_object['customer image'] = decodeURIComponent(img.src);
+                    }
+                    row_object[t_head[cell_index]] = t_cell.textContent.trim();
+                })
+                table_data.push(row_object);
+            })
+
+            return JSON.stringify(table_data, null, 4);
+        }
+
+        json_btn.onclick = () => {
+            const json = toJSON(customers_table);
+            downloadFile(json, 'json')
+        }
+
+        // 5. Converting HTML table to CSV File
+
+        const csv_btn = document.querySelector('#toCSV');
+
+        const toCSV = function (table) {
+            // Code For SIMPLE TABLE
+            // const t_rows = table.querySelectorAll('tr');
+            // return [...t_rows].map(row => {
+            //     const cells = row.querySelectorAll('th, td');
+            //     return [...cells].map(cell => cell.textContent.trim()).join(',');
+            // }).join('\n');
+
+            const t_heads = table.querySelectorAll('th'),
+                tbody_rows = table.querySelectorAll('tbody tr');
+
+            const headings = [...t_heads].map(head => {
+                let actual_head = head.textContent.trim().split(' ');
+                return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+            }).join(',') + ',' + 'image name';
+
+            const table_data = [...tbody_rows].map(row => {
+                const cells = row.querySelectorAll('td'),
+                    img = decodeURIComponent(row.querySelector('img').src),
+                    data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
+
+                return data_without_img + ',' + img;
+            }).join('\n');
+
+            return headings + '\n' + table_data;
+        }
+
+        csv_btn.onclick = () => {
+            const csv = toCSV(customers_table);
+            downloadFile(csv, 'csv', 'customer orders');
+        }
+
+        // 6. Converting HTML table to EXCEL File
+
+        const excel_btn = document.querySelector('#toEXCEL');
+
+        const toExcel = function (table) {
+            // Code For SIMPLE TABLE
+            // const t_rows = table.querySelectorAll('tr');
+            // return [...t_rows].map(row => {
+            //     const cells = row.querySelectorAll('th, td');
+            //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
+            // }).join('\n');
+
+            const t_heads = table.querySelectorAll('th'),
+                tbody_rows = table.querySelectorAll('tbody tr');
+
+            const headings = [...t_heads].map(head => {
+                let actual_head = head.textContent.trim().split(' ');
+                return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+            }).join('\t') + '\t' + 'image name';
+
+            const table_data = [...tbody_rows].map(row => {
+                const cells = row.querySelectorAll('td'),
+                    img = decodeURIComponent(row.querySelector('img').src),
+                    data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
+
+                return data_without_img + '\t' + img;
+            }).join('\n');
+
+            return headings + '\n' + table_data;
+        }
+
+        excel_btn.onclick = () => {
+            const excel = toExcel(customers_table);
+            downloadFile(excel, 'excel');
+        }
+
+        const downloadFile = function (data, fileType, fileName = '') {
+            const a = document.createElement('a');
+            a.download = fileName;
+            const mime_types = {
+                'json': 'application/json',
+                'csv': 'text/csv',
+                'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            }
+            a.href = `
+            data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
+        `;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        let menu = document.querySelector('#menu');
+        let navbar = document.querySelector('header')
+
+        menu.onclick = () => {
+            menu.classList.toggle('fa-times');
+            navbar.classList.toggle('toggle');
+        }
+
+        window.onscroll = () => {
+            menu.classList.remove('fa-times');
+            navbar.classList.remove('toggle');
+
+
+        }
+    </script>
+
+    {% block js %}
+    {% if alert %}
+    <div class="row mt-4">
+        <div class="form-group col-md-12">
+            <div class="alert alert-danger" role="alert">
+                Success!!! You issued a Book !!!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if alert1 %}
+    <div class="row mt-4">
+        <div class="form-group col-md-12">
+            <div class="alert alert-danger" role="alert">
+                Book Stock is Empty!!!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if alert2 %}
+    <div class="row mt-4">
+        <div class="form-group col-md-12">
+            <div class="alert alert-danger" role="alert">
+                You cannot reserve this book as someone has already reserved this book!!!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+</body>
+
+</html>
